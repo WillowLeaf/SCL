@@ -1,6 +1,7 @@
 const int MAX_HEAP_SIZE = 1024;
 int heap[MAX_HEAP_SIZE],result[MAX_HEAP_SIZE];
 int heapSize;
+
 void heapify(int i)
 {
 	int l = i << 1, r = i << 1 | 1;
@@ -14,11 +15,35 @@ void heapify(int i)
 		heapify(m);
 	}
 }
-void build()
+
+void IncreaseKey(int i,int key)
+{
+	heap[i] = key;
+	while(i != 1 && heap[i >> 1] < key) {
+		swap(heap[i],heap[i >> 1]);
+		i = i >> 1;
+	}
+}
+
+void HeapPush(int key)
+{
+	heap[++heapSize] = -INF;
+	IncreaseKey(heapSize,key);
+}
+
+int HeapPop() {
+	int tmp = heap[1];
+	heap[1] = heap[heapSize--];
+	heapify(1);
+	return tmp;
+}
+
+void MakeHeap()
 {
 	for(int i = heapSize >> 1; i >= 1; --i)
 		heapify(i);
 }
+
 void HeapSort()
 {
 	for(int i = 1; i <= heapSize; ++i) {
@@ -26,17 +51,4 @@ void HeapSort()
 		swap(heap[1],heap[heapSize--]);
 		heapify(1);
 	}
-}
-void IncreaseKey(int i,int key)
-{
-	heap[i] = key;
-	while(i != 1 && heap[i<<1] < key) {
-		swap(heap[i],heap[i<<1]);
-		i = i << 1;
-	}
-}
-void HeapInsert(int key)
-{
-	heap[++heapSize] = -INF;
-	IncreaseKey(heapSize,key);
 }
