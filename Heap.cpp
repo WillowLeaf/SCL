@@ -16,19 +16,36 @@ void heapify(int i)
 	}
 }
 
-void IncreaseKey(int i,int key)
+void DecreaseKey(int i,int key)
 {
 	heap[i] = key;
-	while(i != 1 && heap[i >> 1] < key) {
+	while(i != 1 && heap[i >> 1] > key) {
 		swap(heap[i],heap[i >> 1]);
 		i = i >> 1;
 	}
 }
 
+void IncreaseKey(int i, int key)
+{
+	if(heap[i] != key) {
+		heap[i] = key;
+		heapify(i)
+	}
+}
+
+void UpdateKey(int i, int key)
+{
+	if(heap[i] <= key) {
+		IncreaseKey(i, key)
+	} else {
+		DecreaseKey(i, key)
+	}
+}
+
 void HeapPush(int key)
 {
-	heap[++heapSize] = -INF;
-	IncreaseKey(heapSize,key);
+	heap[++heapSize] = INF;
+	DecreaseKey(heapSize,key);
 }
 
 int HeapPop() {
