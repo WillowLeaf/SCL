@@ -1,3 +1,4 @@
+from collections import deque
 def spfa(self, vertices, edges, source, target):
     distances = {v: float('inf') if v != source else 0 for v in vertices}
     inQueue = set()
